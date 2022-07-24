@@ -13,7 +13,7 @@ jobs:
         uses: docker/login-action@v1 # allows to use another pre-made action that's provided in the GitHub actions repository
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test

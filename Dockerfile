@@ -21,6 +21,10 @@ ARG DEV=false
 RUN python -m venv /py && \
     # update pip
     /py/bin/pip install --upgrade pip && \
+    # client package that we're going to need installed inside our Alpine image in order to be able to connect to Postgres
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
     # install the requirements in the venv
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = true ]; \
@@ -28,6 +32,7 @@ RUN python -m venv /py && \
     fi && \
     # remove the contents of the /tmp directory
     rm -rf /tmp/ && \
+    apk del .tmp-build-deps && \
     # add user django-user, without password and without home
     adduser \
     --disabled-password \

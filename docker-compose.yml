@@ -17,3 +17,39 @@ services:
     # command that is used to run the service  
     command: >
       sh -c "python manage.py runserver 0:8000"
+    # environment variables
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    # to indicate that this service is to be started after the one on which it is dependent.
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    # maps the local dev-db-data directory to the /var/lib/postgres/data directory of the container
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: hi@jaimemartinperez.es
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+
+volumes:
+  dev-db-data:
+
+

@@ -130,5 +130,4 @@ dmypy.json
 
 # not self-generated
 tokens
-commands
 .vscode

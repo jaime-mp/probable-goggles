@@ -159,7 +159,8 @@ class PrivateUserApiTests(TestCase):
 
         res = self.client.patch(path=ME_URL, data=payload)
 
-        self.user.refresh_from_db()  # * user values are refreshed from the database (not by default)
+        # * user values are refreshed from the database (not by default)
+        self.user.refresh_from_db()
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(self.user.name, payload["name"])

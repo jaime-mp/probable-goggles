@@ -1,7 +1,6 @@
 """
 Views for the recipe APIs.
 """
-from re import M
 from rest_framework import (
     viewsets,
     mixins,

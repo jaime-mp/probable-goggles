@@ -62,13 +62,17 @@ class Recipe(models.Model):
         blank=True,
     )
     link = models.CharField(max_length=255, blank=True)
+    tags = models.ManyToManyField(
+        to="Tag",
+        blank=True,
+    )
 
     def __str__(self) -> str:
         return self.title
 
 
 class Tag(models.Model):
-    """Tag object."""
+    """Tag for filtering recipes."""
 
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,

@@ -27,7 +27,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         password = validated_data.pop("password", None)
-        user: User = super().update(instance=instance, validated_data=validated_data)
+        user: User = super().update(
+            instance=instance,
+            validated_data=validated_data,
+        )
 
         if password:
             user.set_password(raw_password=password)
@@ -50,7 +53,9 @@ class AuthTokenSerializer(serializers.Serializer):
         password = attrs.get("password")
 
         user: User = authenticate(
-            request=self.context.get("request"), username=email, password=password
+            request=self.context.get("request"),
+            username=email,
+            password=password,
         )
 
         if not user:

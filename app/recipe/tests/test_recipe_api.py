@@ -85,7 +85,10 @@ class PrivateRecipeAPITests(TestCase):
 
     def test_recipe_list_limited_to_user(self):
         """Test list of recipes is limited to authenticated user."""
-        other_user = create_user(email="other@example.com", password="password123")
+        other_user = create_user(
+            email="other@example.com",
+            password="password123",
+        )
         create_recipe(user=other_user)
         create_recipe(user=self.user)
         res = self.client.get(path=RECIPES_URL)
@@ -167,7 +170,7 @@ class PrivateRecipeAPITests(TestCase):
         recipe = create_recipe(user=self.user)
         payload = {"user": new_user.id}
         url = detail_url(recipe_id=recipe.id)
-        res = self.client.patch(path=url, data=payload)
+        self.client.patch(path=url, data=payload)
         recipe.refresh_from_db()
 
         self.assertEqual(recipe.user, self.user)

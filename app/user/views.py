@@ -18,8 +18,9 @@ class CreateTokenView(ObtainAuthToken):
     serializer_class = AuthTokenSerializer
     # * 'rest_framework.renderers.JSONRenderer'
     # * 'rest_framework.renderers.BrowsableAPIRenderer'
-    # * These are the DEFAULT_RENDERER_CLASSES. The second one is necessary to be able
-    # * to access the ednpoint from the API GUI.
+    # * These are the DEFAULT_RENDERER_CLASSES.
+    # * The second one is necessary to be able
+    # * to access the endpoint from the API GUI.
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 

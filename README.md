@@ -1,1 +1,1 @@
-# recipe-app-api
+# drf-recipes-rest-api

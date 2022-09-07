@@ -1,31 +1,35 @@
 version: "3.9"
 
 services:
-  # the name of our service
+  # * the name of our service
   app:
     build:
-      # use the current directory for the context
+      # * use the current directory for the context
       context: .
       args:
         - DEV=true
     ports:
-      # port mapping
+      # * port mapping
       - "8000:8000"
     volumes:
-      # map our ./app directory to the /app directory of the container
+      # * map our ./app directory to the /app directory of the container
       - ./app:/app
-    # command that is used to run the service
+      # * map the dev-static-data volume to the /vol/web directory of
+      # *  the container, so as not to lose data that is saved through
+      # * the API (such as recipe images).
+      - dev-static-data:/vol/web
+    # * command that is used to run the service
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py runserver 0:8000"
-    # environment variables
+    # * environment variables
     environment:
       - DB_HOST=db
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
-    # to indicate that this service is to be started after the one on which it is dependent.
+    # * to indicate that this service is to be started after the one on which it is dependent.
     depends_on:
       - db
 
@@ -33,7 +37,7 @@ services:
     image: postgres:13-alpine
     ports:
       - "5432:5432"
-    # maps the local dev-db-data directory to the /var/lib/postgres/data directory of the container
+    # * maps the local dev-db-data directory to the /var/lib/postgres/data directory of the container
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:
@@ -53,5 +57,5 @@ services:
 
 volumes:
   dev-db-data:
-
+  dev-static-data:
 

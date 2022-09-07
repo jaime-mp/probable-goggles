@@ -134,7 +134,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = "/static/"
+# * Base static URL
+STATIC_URL = "/static/static/"
+
+# * Base media URL
+MEDIA_URL = "/static/media/"
+
+# * Path to media on fileystem
+MEDIA_ROOT = "/vol/web/media"
+
+# * Path to static files on filesystem
+# * When executing the collectstatic command, all static files will be
+# * copied to this path
+STATIC_ROOT = "/vol/web/static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

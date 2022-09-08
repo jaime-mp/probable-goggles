@@ -157,5 +157,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "core.User"
 
-# * configures the DRF to use drf-spectacular to generate the schema (OpenAPI Specification (OAS))
+# * Configures the DRF to use drf-spectacular to generate the schema (OpenAPI Specification (OAS))
 REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"}
+
+# * To be able to upload images through the browser (from the swagger)
+SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}

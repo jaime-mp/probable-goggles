@@ -134,10 +134,16 @@ class PrivateTagsApiTests(TestCase):
         Tag.objects.create(user=self.user, name="Lunch")
 
         recipe1 = Recipe.objects.create(
-            title="Eggs with bacon", time_minutes=10, price="2.0", user=self.user
+            title="Eggs with bacon",
+            time_minutes=10,
+            price="2.0",
+            user=self.user
         )
         recipe2 = Recipe.objects.create(
-            title="Green eggs on toast", time_minutes=10, price="5.0", user=self.user
+            title="Green eggs on toast",
+            time_minutes=10,
+            price="5.0",
+            user=self.user
         )
 
         recipe1.tags.add(tag)

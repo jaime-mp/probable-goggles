@@ -29,6 +29,7 @@ services:
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
+      - DEBUG=1
     # * to indicate that this service is to be started after the one on which it is dependent.
     depends_on:
       - db

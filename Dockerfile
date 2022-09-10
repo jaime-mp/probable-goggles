@@ -1,6 +1,6 @@
 # * image to start from
 FROM python:3.9-alpine3.13
-LABEL mantainer="jaimemp"
+LABEL mantainer="jaimemartinperez.es"
 
 # * tells Python that you don't want to buffer the output, so you can see the execution
 ENV PYTHONUNBUFFERED 1
@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 # * copies the requirements.txt to the /temp directory of the container
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
+COPY ./scripts /scripts
 # * copy the project's app directory to the direct /app directory of the container
 COPY ./app /app
 # * set the working directory of the container, on which the commands will be executed
@@ -24,7 +25,7 @@ RUN python -m venv /py && \
     # * client package that we're going to need installed inside our Alpine image in order to be able to connect to Postgres
     apk add --update --no-cache postgresql-client jpeg-dev && \
     apk add --update --no-cache --virtual .tmp-build-deps \
-        build-base postgresql-dev musl-dev zlib zlib-dev && \
+        build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
     # * install the requirements in the venv
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = true ]; \
@@ -41,10 +42,13 @@ RUN python -m venv /py && \
     mkdir -p /vol/web/media && \
     mkdir -p /vol/web/static && \
     chown -R django-user:django-user /vol && \
-    chmod -R 755 /vol
+    chmod -R 755 /vol && \
+    chmod -R +x /scripts
 
 # * create an environment variable for our venv
-ENV PATH="/py/bin:$PATH"
+ENV PATH="/scripts:/py/bin:$PATH"
 
 # * specify the user to be used
 USER django-user
+
+CMD ["run.sh"]
